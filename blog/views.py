@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
@@ -54,6 +55,11 @@ class NewPostView(CreateView):
         new_post.blog = blog
         new_post.owner = user
         new_post.save()
+        post_url = self.request.build_absolute_uri(new_post.get_absolute_url())
+        subject = '{} ({}) recommends you reading "{}"'.format(user.username, user.email, new_post.title)
+        message = 'Read "{}" at {}'.format(new_post.title, post_url, user.username)
+        for subscription in blog.subscriptions.all():
+            send_mail(subject, message, user.email, [subscription.email])
         self.object = new_post
 
         return HttpResponseRedirect(self.get_success_url())
