@@ -17,6 +17,7 @@ class Post(models.Model):
     slug = models.SlugField(max_length=250)
     blog = models.ForeignKey(Blog, related_name='blog_posts', on_delete=models.CASCADE)
     body = models.TextField()
+    viewed = models.ManyToManyField(User, related_name='viewed', blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:

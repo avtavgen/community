@@ -1,0 +1,7 @@
+<ul>
+{% for blog in available_blogs %}
+    <li>
+        <a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a>
+    </li>
+{% endfor %}
+</ul>

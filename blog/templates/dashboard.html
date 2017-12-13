@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h1>Welcome to Community</h1>
+    <h2>Posts</h2>
+    {% for post in posts %}
+        <p>
+            <a href="{% url "post-detail" slug=post.slug %}">{{post.title }}</a>
+        </p>
+        <p>
+            {{post.body }}
+        </p>
+        <p>
+            {{post.created }}
+        </p>
+    {% endfor %}
+{% endblock %}
