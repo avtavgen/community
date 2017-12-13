@@ -1,3 +1,6 @@
+{% if current %}
+    <h3><a href="{{ current.get_absolute_url }}">Home</a></h3>
+{% endif %}
 <ul>
 {% for blog in available_blogs %}
     <li>

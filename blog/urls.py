@@ -1,11 +1,13 @@
 from django.urls import path
 
-from blog.views import HomeView, PostDetailView
+from blog.views import HomeView, PostDetailView, NewPostView, PostUpdate, PostDelete
 
 app_name = 'blog'
 urlpatterns = [
     path('<str:user>/', HomeView.as_view(), name='dashboard'),
-    # path('new-post/', NewPostView.as_view(), name='new-post'),
+    path('<str:user>/new-post/', NewPostView.as_view(), name='new-post'),
+    path('<str:user>/<slug:slug>/update/', PostUpdate.as_view(), name='update-post'),
+    path('<str:user>/<slug:slug>/delete/', PostDelete.as_view(), name='delete-post'),
     path('<str:user>/<slug:slug>/', PostDetailView.as_view(), name='post-detail'),
     # path('subscribe/slug:slug/', UpvotePostView.as_view(), name='add-subscription'),
     # path('subscribe/slug:slug/remove/', RemoveUpvoteFromPostView.as_view(), name='remove-subscription'),

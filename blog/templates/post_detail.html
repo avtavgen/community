@@ -4,4 +4,8 @@
     <h1>{{ object.title }}</h1>
     <p>{{ object.body }}</p>
     <p>submitted on: <b>{{ object.created }}</b></p>
+    {% if request.user.is_authenticated %}
+        <p><a href="{% url "blog:update-post" user=request.user slug=object.slug %}">Edit</a></p>
+        <p><a href="{% url "blog:delete-post" user=request.user slug=object.slug %}">Delete</a></p>
+    {% endif %}
 {% endblock %}
