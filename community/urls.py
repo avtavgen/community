@@ -24,6 +24,6 @@ urlpatterns = [
     path('login/', login, name='login'),
     path('logout/', logout, name='logout'),
     path('logout-then-login/', logout_then_login, name='logout_then_login'),
-    path('blog/', include('blog.urls')),
+    path('blog/', include('blog.urls', namespace='blog')),
     path('', GreetingView.as_view(), name='greeting'),
 ]
