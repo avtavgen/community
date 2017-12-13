@@ -77,3 +77,35 @@ class PostDelete(DeleteView):
     model = Post
     template_name = 'post_confirm_delete.html'
     success_url = reverse_lazy('greeting')
+
+
+class BlogSubscriptionView(View):
+    def get(self, request, **kwargs):
+        blog = Blog.objects.get(slug=kwargs['slug'])
+        blog.subscriptions.add(request.user)
+        return HttpResponseRedirect(reverse('greeting'))
+
+
+class RemoveBlogSubscriptionView(View):
+    def get(self, request, **kwargs):
+        blog = Blog.objects.get(slug=kwargs['slug'])
+        blog.subscriptions.remove(request.user)
+        return HttpResponseRedirect(reverse('greeting'))
+
+
+class NewsFeedView(ListView):
+    template_name = 'news_feed.html'
+    context_object_name = 'posts'
+    model = Post
+
+    def get_context_data(self, **kwargs):
+        ctx = super(NewsFeedView, self).get_context_data(**kwargs)
+        user = User.objects.get(username=self.kwargs['user'])
+        posts = []
+        for subscription in user.subscriptions.all():
+            blog = Blog.objects.get(owner=subscription.owner)
+            for post in Post.objects.filter(blog=blog):
+                posts.append(post)
+        ctx['posts'] = posts
+        ctx['owner'] = user
+        return ctx

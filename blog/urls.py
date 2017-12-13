@@ -9,6 +9,4 @@ urlpatterns = [
     path('<str:user>/<slug:slug>/update/', PostUpdate.as_view(), name='update-post'),
     path('<str:user>/<slug:slug>/delete/', PostDelete.as_view(), name='delete-post'),
     path('<str:user>/<slug:slug>/', PostDetailView.as_view(), name='post-detail'),
-    # path('subscribe/slug:slug/', UpvotePostView.as_view(), name='add-subscription'),
-    # path('subscribe/slug:slug/remove/', RemoveUpvoteFromPostView.as_view(), name='remove-subscription'),
 ]

@@ -5,6 +5,11 @@
 {% for blog in available_blogs %}
     <li>
         <a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a>
+        {% if request.user in blog.subscriptions.all %}
+            <a href="{% url "remove-subscription" slug=blog.slug %}">Remove subscription</a>
+        {% else %}
+            <a href="{% url "add-subscription" slug=blog.slug %}">Subscribe</a>
+        {% endif %}
     </li>
 {% endfor %}
 </ul>

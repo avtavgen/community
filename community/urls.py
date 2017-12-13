@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.contrib.auth.views import login, logout, logout_then_login
 from django.urls import path, include
 
-from blog.views import GreetingView
+from blog.views import GreetingView, BlogSubscriptionView, RemoveBlogSubscriptionView, NewsFeedView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +26,7 @@ urlpatterns = [
     path('logout-then-login/', logout_then_login, name='logout_then_login'),
     path('blog/', include('blog.urls', namespace='blog')),
     path('', GreetingView.as_view(), name='greeting'),
+    path('subscribe/<slug:slug>/', BlogSubscriptionView.as_view(), name='add-subscription'),
+    path('subscribe/<slug:slug>/remove/', RemoveBlogSubscriptionView.as_view(), name='remove-subscription'),
+    path('<str:user>/feed/', NewsFeedView.as_view(), name='news-feed'),
 ]
